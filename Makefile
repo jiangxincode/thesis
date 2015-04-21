@@ -1,4 +1,4 @@
-OBJECTS = ranksort matrix_multiplication sat1
+OBJECTS = ranksort matrix_multiplication sat1 sat2
 ALL: $(OBJECTS)
 
 %: %.c
