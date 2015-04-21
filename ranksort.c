@@ -2,22 +2,7 @@
 #include <stdlib.h>
 #include <mpi.h>
 
-/*
-
-  * 函数名: main
-
-  * 功能： 主函数，实现枚举排序
-
-  * 输入：argc为命令行参数个数；
-
-  * argv为每个命令行参数组成的字符串数组
-
-  * 输出：返回1代表程序正常结束
-
-*/
-
 int main(int argc,char *argv[])
-
 {
     int DataSize, MyLength; /*DataSize:数组长度；MyLength：处理器分配到的数据长度*/
     int *data_in, *data_out; /*输入和输出数组指针*/
@@ -145,7 +130,6 @@ int main(int argc,char *argv[])
 
 
 /*
- * 函数名: CountRank
  * 功能： 计算所属部分数据的秩
  * 输入： data：指向待排序序列的指针
  * DataSize为待排序序列的长度
@@ -182,18 +166,13 @@ int CountRank(int *data,int DataSize,int MyLength,int *rank,int SumID,int MyID)
 
 
 /*
-
- * 函数名: ErrMsg
  * 功能： 读入待排序序列的长度
  * 输入： 无
  * 输出： 返回待排序序列的长度
  */
-
 int GetDataSize()
-
 {
     int i;
-
     while(1)
     {
         printf("Input the Data Size :");
@@ -206,26 +185,16 @@ int GetDataSize()
 
         ErrMsg("Wrong Data Size, must between [1..65535]");
     }
-
     return i;
 }
 
 /*
-
- * 函数名: ErrMsg
-
  * 功能： 输出错误信息
-
  * 输入： msg:出错信息字符串
-
  * 输出：返回1代表程序正常结束
-
  */
-
 int ErrMsg(char *msg)
-
 {
     printf("Error: %s \n",msg);
     return 1;
 }
-

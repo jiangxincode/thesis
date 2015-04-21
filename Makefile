@@ -1,6 +1,7 @@
-OBJECTS = ranksort
-CC = mpicc
-ranksort:ranksort.c
-	$(CC) -o $@ $^
+OBJECTS = ranksort matrix_multiplication sat1
+ALL: $(OBJECTS)
+
+%: %.c
+	mpicc -o $@ $^
 clean:
 	rm $(OBJECTS)
