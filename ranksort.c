@@ -2,13 +2,17 @@
 #include <stdlib.h>
 #include <mpi.h>
 
+int CountRank(int *data,int DataSize,int MyLength,int *rank,int SumID,int MyID);
+int GetDataSize();
+int ErrMsg(char *msg);
+
 int main(int argc,char *argv[])
 {
     int DataSize, MyLength; /*DataSize:数组长度；MyLength：处理器分配到的数据长度*/
     int *data_in, *data_out; /*输入和输出数组指针*/
     int *rank; /*秩数组*/
     int MyID, SumID;
-    int i, j;
+    int i;
     MPI_Status status;
     MPI_Init(&argc,&argv); /*MPI 初始化*/
     MPI_Comm_rank(MPI_COMM_WORLD,&MyID); /*每个处理器确定各自ID*/
