@@ -1,4 +1,4 @@
 *.swp
 *.orig
 tags
-data/
+*.data

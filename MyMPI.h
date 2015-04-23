@@ -9,6 +9,10 @@
  */
 
 /************************* MACROS **************************/
+#ifndef __MYMPI_H
+#define __MYMPI_H
+
+#include <mpi.h>
 
 #define DATA_MSG           0
 #define PROMPT_MSG         1
@@ -19,6 +23,7 @@
 #define TYPE_ERROR         -3
 
 #define MIN(a,b)           ((a)<(b)?(a):(b))
+#define MAX(a,b)           ((a)>(b)?(a):(b))
 #define BLOCK_LOW(id,p,n)  ((id)*(n)/(p))
 #define BLOCK_HIGH(id,p,n) (BLOCK_LOW((id)+1,p,n)-1)
 #define BLOCK_SIZE(id,p,n) \
@@ -26,6 +31,16 @@
 #define BLOCK_OWNER(j,p,n) (((p)*((j)+1)-1)/(n))
 #define PTR_SIZE           (sizeof(void*))
 #define CEILING(i,j)       (((i)+(j)-1)/(j))
+
+
+typedef double dtype;
+#define mpitype MPI_DOUBLE
+
+#define DEFAULT_ROW 10
+#define DEFAULT_COLUMN 10
+#define DEFAULT_SCALE   10
+#define DEFAULT_FILENAME "data/matrix.data"
+
 
 /***************** MISCELLANEOUS FUNCTIONS *****************/
 
@@ -63,3 +78,4 @@ void print_block_vector (void *, MPI_Datatype, int,
 void print_replicated_vector (void *, MPI_Datatype, int,
         MPI_Comm);
 
+#endif

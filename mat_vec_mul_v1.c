@@ -7,9 +7,6 @@
 #include <mpi.h>
 #include "MyMPI.h"
 
-typedef double dtype;
-#define mpitype MPI_DOUBLE
-
 int main(int argc, char **argv)
 {
     dtype **a; //first factor, a matrix
