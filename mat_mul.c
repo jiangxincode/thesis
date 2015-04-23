@@ -10,25 +10,20 @@
 
 MPI_Status status;
 
-main(int argc,char **argv)
+int main(int argc,char **argv)
 {
     int numtasks,                   //进程总数
         taskid,                        //进程标识
         numworkers,              //从进程数目
         source,                      //消息源
         dest,                          //消息目的地
-        nbytes,
         mtype,                       //消息类型
-        intsize,
-        dbsize,
         rows,
         averow,extra,offset,
         i,j,k,
         count;
     double star,end;
     double a[NRA][NCA],b[NCA][NCB],c[NRA][NCB];
-    intsize = sizeof(int);
-    dbsize = sizeof(double);
     MPI_Init(&argc,&argv);
     MPI_Comm_rank(MPI_COMM_WORLD,&taskid);
     MPI_Comm_size(MPI_COMM_WORLD,&numtasks);
@@ -143,4 +138,5 @@ main(int argc,char **argv)
     }
 
     MPI_Finalize();
+    return 0;
 }
