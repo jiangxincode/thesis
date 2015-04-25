@@ -596,7 +596,12 @@ void read_replicated_vector (
     {
         infileptr = fopen (s, "r");
         if (infileptr == NULL) *n = 0;
-        else fread (n, sizeof(int), 1, infileptr);
+        else
+        {
+            fread (n, sizeof(int), 1, infileptr);
+            int temp;
+            fread (&temp, sizeof(int), 1, infileptr);
+        }
     }
     MPI_Bcast (n, 1, MPI_INT, p-1, MPI_COMM_WORLD);
     if (! *n) terminate (id, "Cannot open vector file");
@@ -658,17 +663,52 @@ void print_subvector (
     for (i = 0; i < n; i++)
     {
         if (dtype == MPI_DOUBLE)
-            printf ("%6.3f ", ((double *)a)[i]);
-        else
         {
-            if (dtype == MPI_FLOAT)
-                printf ("%6.3f ", ((float *)a)[i]);
-            else if (dtype == MPI_INT)
-                printf ("%6d ", ((int *)a)[i]);
+            printf ("%6.3f ", ((double *)a)[i]);
+        }
+        else if (dtype == MPI_FLOAT)
+        {
+            printf ("%6.3f ", ((float *)a)[i]);
+        }
+        else if (dtype == MPI_INT)
+        {
+            printf ("%6d ", ((int *)a)[i]);
         }
     }
 }
 
+/*
+ *   Wtite elements of a singly-subscripted array.
+ */
+
+void write_subvector (
+    void        *a,       /* IN - Array pointer */
+    MPI_Datatype dtype,   /* IN - Array type */
+    int          n)       /* IN - Array size */
+{
+
+    FILE *fp = fopen("data/mpi_result.data", "wb");
+    if(fp == NULL)
+    {
+        perror("open fail");
+        exit(1);
+    }
+    fwrite(&n, sizeof(int), 1, fp);
+    int m = 1;
+    fwrite(&m, sizeof(int), 1, fp);
+    if (dtype == MPI_DOUBLE)
+    {
+        fwrite((double*)a, sizeof(dtype), n, fp);
+    }
+    else if (dtype == MPI_FLOAT)
+    {
+        fwrite((float*)a, sizeof(dtype), n, fp);
+    }
+    else if (dtype == MPI_INT)
+    {
+        fwrite((int*)a, sizeof(dtype), n, fp);
+    }
+}
 
 /*
  *   Print a matrix distributed checkerboard fashion among
@@ -942,6 +982,27 @@ void print_replicated_vector (
     if (!id)
     {
         print_subvector (v, dtype, n);
-        printf ("\n\n");
+    }
+}
+
+/*
+ *   Wtire a vector that is replicated among the processes
+ *   in a communicator.
+ */
+
+void write_replicated_vector (
+    void        *v,      /* IN - Address of vector */
+    MPI_Datatype dtype,  /* IN - Vector element type */
+    int          n,      /* IN - Elements in vector */
+    MPI_Comm     comm)   /* IN - Communicator */
+{
+    int id;              /* Process rank */
+
+    MPI_Comm_rank (comm, &id);
+
+    if (!id)
+    {
+        //print_subvector (v, dtype, n);
+        write_subvector(v, dtype, n);
     }
 }

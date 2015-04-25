@@ -78,4 +78,7 @@ void print_block_vector (void *, MPI_Datatype, int,
 void print_replicated_vector (void *, MPI_Datatype, int,
         MPI_Comm);
 
+void write_replicated_vector(void *, MPI_Datatype, int,
+        MPI_Comm);
+
 #endif
