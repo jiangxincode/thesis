@@ -1,6 +1,6 @@
 OBJECTS = ranksort mat_mul sat1 sat2 sat3 prime \
 		  eratosthenes_parallel mat_vec_mul_v1 \
-		  mat_gen mat_print
+		  mat_gen mat_print matrix 
 ALL: $(OBJECTS)
 
 %: %.c

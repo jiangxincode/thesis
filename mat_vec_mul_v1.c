@@ -20,7 +20,11 @@ int main(int argc, char **argv)
     int m,n; //rows and columns in matrix
     int nprime; //elements in vector
     int rows; //number of rows of this process
+
+    double elapsed_time;
+
     MPI_Init(&argc, &argv);
+
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
 
@@ -29,6 +33,10 @@ int main(int argc, char **argv)
     //print_row_striped_matrix((void**)a, mpitype, m, n, MPI_COMM_WORLD);
     read_replicated_vector(argv[2], (void*)&b, mpitype, &nprime, MPI_COMM_WORLD);
     //print_replicated_vector(b, mpitype, nprime, MPI_COMM_WORLD);
+    
+    MPI_Barrier(MPI_COMM_WORLD);
+    elapsed_time = - MPI_Wtime();
+
     c_block = (dtype*)malloc(rows*sizeof(dtype));
     c = (dtype*)malloc(n*sizeof(dtype));
     for(i=0; i<rows; i++)
@@ -41,7 +49,15 @@ int main(int argc, char **argv)
     }
     replicate_block_vector(c_block, n, (void*)c, mpitype, MPI_COMM_WORLD);
     //print_replicated_vector(c, mpitype, n, MPI_COMM_WORLD);
-    write_replicated_vector(c, mpitype, n, MPI_COMM_WORLD);
+
+    //write_replicated_vector(c, mpitype, n, MPI_COMM_WORLD);
+
+    elapsed_time += MPI_Wtime();
+    if(id == 0)
+    {
+        printf("This program cost %f ms\n", elapsed_time);
+    }
     MPI_Finalize();
+
     return 0;
 }
