@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 #include <math.h>
 
 // FUNCTION PROTOTYPES
@@ -331,7 +330,7 @@ void System::SaveClusters(char *fname)
 }
 
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	System kmeans;
 //if (argc<2) {

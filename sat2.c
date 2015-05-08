@@ -12,7 +12,7 @@
 /* Return 1 if 'i'th bit of 'n' is 1; 0 otherwise */
 #define EXTRACT_BIT(n, i) ((n & (1<<i)) ? 1 : 0)
 
-int check_circuit(int, int);
+int static check_circuit(int, int);
 
 int main(int argc, char **argv)
 {
@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int check_circuit(int id, int z)
+int static check_circuit(int id, int z)
 {
 	int v[16];
 	int i;
