@@ -36,6 +36,9 @@
 typedef double dtype;
 #define mpitype MPI_DOUBLE
 
+#define DEFAULT_TYPE "matrix"
+#define DEFAULT_K 10
+#define DEFAULT_N 100
 #define DEFAULT_ROW 10
 #define DEFAULT_COLUMN 10
 #define DEFAULT_SCALE   10

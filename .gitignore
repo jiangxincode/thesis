@@ -4,4 +4,10 @@ tags
 *.data
 *.doc
 *.doc#
+*.depend
+*.layout
+*.cbp
+*.bmarks
 data/
+bin/
+obj/
