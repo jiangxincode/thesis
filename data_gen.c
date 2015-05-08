@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
 		switch(opt)
 		{
 		case 't':
-            strncpy(type, optarg, BUFSIZ);
-            break;
+			strncpy(type, optarg, BUFSIZ);
+			break;
 		case 'r':
 			row = atoi(optarg);
 			break;
@@ -48,26 +48,26 @@ int main(int argc, char *argv[])
 		}
 	}
 	if(strncmp(type, "matrix", BUFSIZ) == 0)
-    {
-        matrix_write(filename, row, column);
-    }
-    else if(strncmp(type, "kmeans", BUFSIZ) == 0)
-    {
-        kmeans_write(filename, N, K);
-    }
-    else
-    {
-        perror("invalid type!");
-        exit(1);
-    }
+	{
+		matrix_write(filename, row, column);
+	}
+	else if(strncmp(type, "kmeans", BUFSIZ) == 0)
+	{
+		kmeans_write(filename, N, K);
+	}
+	else
+	{
+		perror("invalid type!");
+		exit(1);
+	}
 	return 0;
 }
 
 void kmeans_write(char *filename, int N, int K)
 {
-    int i;
-    FILE *pFile = fopen(filename, "wb");
-    if(pFile == NULL)
+	int i;
+	FILE *pFile = fopen(filename, "wb");
+	if(pFile == NULL)
 	{
 		fputs("File error\n", stderr);
 		exit(1);
@@ -75,10 +75,10 @@ void kmeans_write(char *filename, int N, int K)
 
 	dtype *data = (dtype *)malloc(N * sizeof(dtype));
 	if(data == NULL)
-    {
-        fprintf(stderr, "Could not allocate enough memory for data\n");
+	{
+		fprintf(stderr, "Could not allocate enough memory for data\n");
 		exit(1);
-    }
+	}
 	srand((int)time(0));
 	for(i = 0; i < N; i++)
 	{
@@ -94,9 +94,9 @@ void kmeans_write(char *filename, int N, int K)
 
 void matrix_write(char *filename, int row, int column)
 {
-    int i, j;
-    FILE *pFile = fopen(filename, "wb");
-    if(pFile == NULL)
+	int i, j;
+	FILE *pFile = fopen(filename, "wb");
+	if(pFile == NULL)
 	{
 		fputs("File error\n", stderr);
 		exit(1);

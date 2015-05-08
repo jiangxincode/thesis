@@ -47,41 +47,41 @@ typedef double dtype;
 
 /***************** MISCELLANEOUS FUNCTIONS *****************/
 
-void  terminate (int, char *);
+void  terminate(int, char *);
 
 /*************** DATA DISTRIBUTION FUNCTIONS ***************/
 
-void replicate_block_vector (void *, int, void *,
-        MPI_Datatype, MPI_Comm);
-void create_mixed_xfer_arrays (int, int, int, int**, int**);
-void create_uniform_xfer_arrays (int, int, int, int**,int**);
+void replicate_block_vector(void *, int, void *,
+                            MPI_Datatype, MPI_Comm);
+void create_mixed_xfer_arrays(int, int, int, int**, int**);
+void create_uniform_xfer_arrays(int, int, int, int**,int**);
 
 /****************** INPUT FUNCTIONS ************************/
 
-void read_checkerboard_matrix (char *, void ***, void **,
-        MPI_Datatype, int *, int *, MPI_Comm);
-void read_col_striped_matrix (char *, void ***, void **,
-        MPI_Datatype, int *, int *, MPI_Comm);
-void read_row_striped_matrix (char *, void ***, void **,MPI_Datatype, int *, int *, MPI_Comm);
-void read_block_vector (char *, void **, MPI_Datatype,
-        int *, MPI_Comm);
-void read_replicated_vector (char *, void **, MPI_Datatype,
-        int *, MPI_Comm);
+void read_checkerboard_matrix(char *, void ***, void **,
+                              MPI_Datatype, int *, int *, MPI_Comm);
+void read_col_striped_matrix(char *, void ***, void **,
+                             MPI_Datatype, int *, int *, MPI_Comm);
+void read_row_striped_matrix(char *, void ***, void **,MPI_Datatype, int *, int *, MPI_Comm);
+void read_block_vector(char *, void **, MPI_Datatype,
+                       int *, MPI_Comm);
+void read_replicated_vector(char *, void **, MPI_Datatype,
+                            int *, MPI_Comm);
 
 /****************** OUTPUT FUNCTIONS ***********************/
 
-void print_checkerboard_matrix (void **, MPI_Datatype, int,
-        int, MPI_Comm);
-void print_col_striped_matrix (void **, MPI_Datatype, int,
-        int, MPI_Comm);
-void print_row_striped_matrix (void **, MPI_Datatype, int,
-        int, MPI_Comm);
-void print_block_vector (void *, MPI_Datatype, int,
-        MPI_Comm);
-void print_replicated_vector (void *, MPI_Datatype, int,
-        MPI_Comm);
+void print_checkerboard_matrix(void **, MPI_Datatype, int,
+                               int, MPI_Comm);
+void print_col_striped_matrix(void **, MPI_Datatype, int,
+                              int, MPI_Comm);
+void print_row_striped_matrix(void **, MPI_Datatype, int,
+                              int, MPI_Comm);
+void print_block_vector(void *, MPI_Datatype, int,
+                        MPI_Comm);
+void print_replicated_vector(void *, MPI_Datatype, int,
+                             MPI_Comm);
 
 void write_replicated_vector(void *, MPI_Datatype, int,
-        MPI_Comm);
+                             MPI_Comm);
 
 #endif
