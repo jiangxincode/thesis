@@ -1,12 +1,10 @@
-/*
- *
- */
-
 #include <mpi.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "MyMPI.h"
+
+#define BLOCK_LOW(id,p,n)  ((id)*(n)/(p))
+#define BLOCK_HIGH(id,p,n) (BLOCK_LOW((id)+1,p,n)-1)
 
 int main(int argc, char **argv)
 {
