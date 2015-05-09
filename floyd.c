@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-//#include "MyMPI.h"
+#include "MyMPI.h"
 
 //定义矩阵类型
 typedef int dtype;
