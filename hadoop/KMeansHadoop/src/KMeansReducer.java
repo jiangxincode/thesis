@@ -1,4 +1,4 @@
-package edu.jiangxin.kmeans;
+
 
 import java.io.BufferedWriter;
 import java.io.IOException;
