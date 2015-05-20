@@ -49,7 +49,6 @@ public class KMeansClusteringJob {
 				.findCounter(KMeansReducer.Counter.CONVERGED).getValue();
 		iteration++;
 		long time = 0;
-		// System.out.println(counter + " " + iteration);
 		while (counter > 0 && iteration < 10) {
 			conf = new Configuration();
 			conf.set("centroid.path", center.toString());

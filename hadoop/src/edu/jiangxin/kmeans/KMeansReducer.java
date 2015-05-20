@@ -20,31 +20,38 @@ public class KMeansReducer extends Reducer<Text, Text, Text, Text> {
 	}
 
 	private final List<String> centers = new ArrayList<String>();
-	int cluster = 0;
 
 	@Override
 	protected void reduce(Text key, Iterable<Text> values, Context context)
 			throws IOException, InterruptedException {
+		int dimension = 2;
 
-		int dimension = values.toString().split(",").length;
+		
 		Double[] newCentroid_i = new Double[dimension];
+		for(int i=0;i<dimension;i++) {
+			newCentroid_i[i] = new Double(0.0);
+		}
 		int count = 0;
-		for (Text value : values) {
+		for(Text value : values) {
 			for(int i=0;i<dimension;i++) {
 				newCentroid_i[i] += Double.parseDouble(value.toString().split(",")[i]);
 			}
 			count++;
 		}
-		cluster++;
+		System.out.println(count);
+		System.out.println();
+		System.out.println();
+		
 		for(int i=0;i<dimension;i++) {
 			newCentroid_i[i] = newCentroid_i[i] / count;
 		}
 		String newCentroid = "";
 		for(int i=0;i<dimension-1;i++) {
-			newCentroid += newCentroid_i[i] + ",";
+			newCentroid += newCentroid_i[i].toString() + ",";
 		}
-		newCentroid += newCentroid_i[dimension-1];
+		newCentroid += newCentroid_i[dimension-1].toString();
 		centers.add(newCentroid);
+		System.out.println(newCentroid);
 		if (!checkConvergence(key.toString(), newCentroid, dimension))
 			context.getCounter(Counter.CONVERGED).increment(1);
 	}

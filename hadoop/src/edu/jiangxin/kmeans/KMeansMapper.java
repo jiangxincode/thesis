@@ -40,8 +40,7 @@ public class KMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
 			throws IOException, InterruptedException {
 		String nearest = null;
 		double nearestDistance = Double.MAX_VALUE;
-		String[] temp = value.toString().split(",");
-		int dimension = temp.length;
+		int dimension = value.toString().split(",").length;
 		for (String c : centers) {
 			double dist = dist(c, value.toString(), dimension);
 			if (null == nearest) {
