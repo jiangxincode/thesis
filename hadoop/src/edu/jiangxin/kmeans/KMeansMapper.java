@@ -40,9 +40,10 @@ public class KMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
 			throws IOException, InterruptedException {
 		String nearest = null;
 		double nearestDistance = Double.MAX_VALUE;
-		//System.out.println("here");
+		String[] temp = value.toString().split(",");
+		int dimension = temp.length;
 		for (String c : centers) {
-			double dist = dist(c, value.toString());
+			double dist = dist(c, value.toString(), dimension);
 			if (null == nearest) {
 				nearest = c;
 				nearestDistance = dist;
@@ -58,12 +59,13 @@ public class KMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
 		context.write(word, value);
 	}
 
-	private static double dist(String point, String center) {
-		double point_x = Double.parseDouble(point.split(",")[0]);
-		double point_y = Double.parseDouble(point.split(",")[1]);
-		double center_x = Double.parseDouble(center.split(",")[0]);
-		double center_y = Double.parseDouble(center.split(",")[1]);
-		return Math.sqrt(Math.pow((center_x - point_x), 2)
-				+ Math.pow((center_y - point_y), 2));
+	private static double dist(String point, String center, int dimension) {
+		double sum = 0.0;
+		for(int i=0;i<dimension;i++) {
+			double point_i = Double.parseDouble(point.split(",")[i]);
+			double center_i = Double.parseDouble(center.split(",")[i]);
+			sum += Math.pow((point_i - center_i), 2);
+		}
+		return Math.sqrt(sum);
 	}
 }
