@@ -1,9 +1,4 @@
 package edu.sunyuanshuai.sharememoryinnerproduct;
-/*
- * <author>孙远帅</author>
- * <date>2012/10/26</date>
- * <email>sunyuanshuai@Gmail.com</email>
- */
 
 import java.io.*;
 import java.net.URI;
@@ -39,11 +34,13 @@ public class BSInnerProduct
 	
 	private static class BSInnerGroupComparator extends WritableComparator
 	{
+		@SuppressWarnings("unused")
 		public BSInnerGroupComparator()
 		{
 			super(IndexPair.class, true);
 		}
 		
+		@SuppressWarnings("rawtypes")
 		public int compare(WritableComparable w1, WritableComparable w2)
 		{
 			IndexPair ia = (IndexPair)w1;
@@ -77,6 +74,7 @@ public class BSInnerProduct
 			rightMatrix = new double[rowNumRightMatrix][colNumRightMatrix];
 		}
 		
+		@SuppressWarnings("deprecation")
 		private void getRightMatrixFormDistributedCache(Configuration conf)
 		{
 			try
@@ -152,6 +150,7 @@ public class BSInnerProduct
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void runBSInner(int rowNumLeftMatrix, int colNumLeftMatrix, int rowNumRightMatrix, int colNumRightMatrix, String leftMatrixPath, String rightMatrixPath, String outputDir, int numReduceNum) throws Exception
 	{
 		if(colNumLeftMatrix != rowNumRightMatrix)

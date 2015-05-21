@@ -1,9 +1,5 @@
 package edu.sunyuanshuai.blockproduct.sparsematrixproduct;
-/*
- * <author>孙远帅</author>
- * <date>2012/10/26</date>
- * <email>sunyuanshuai@Gmail.com</email>
- */
+
 import java.io.*;
 import java.util.*;
 
@@ -44,6 +40,7 @@ public class SparseMatrixMultiply
 	
 	/**	The job 1 intermediate key class. */
 	
+	@SuppressWarnings("rawtypes")
 	private static class Key implements WritableComparable
 	{
 		public int index1;
@@ -359,6 +356,7 @@ public class SparseMatrixMultiply
 	
 	private static void job1 (Configuration conf) 	throws Exception
 	{
+		@SuppressWarnings("deprecation")
 		Job job = new Job(conf, "Matrix Multiply Job 1");
 		job.setJarByClass(SparseMatrixMultiply.class);
 		job.setNumReduceTasks(conf.getInt("MatrixMultiply.R1", 0));
@@ -382,6 +380,7 @@ public class SparseMatrixMultiply
 	
 	private static void job2 (Configuration conf) throws Exception
 	{
+		@SuppressWarnings("deprecation")
 		Job job = new Job(conf, "Matrix Multiply Job 2");
 		job.setJarByClass(SparseMatrixMultiply.class);
 		job.setNumReduceTasks(conf.getInt("MatrixMultiply.R2", 0));

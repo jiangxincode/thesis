@@ -17,6 +17,7 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 
 public class OuterProduct
 {	
+	@SuppressWarnings("rawtypes")
 	private static class OuterKey implements WritableComparable
 	{
 		public int i;
@@ -105,11 +106,13 @@ public class OuterProduct
 	
 	private static class OuterGroupComparator extends WritableComparator
 	{
+		@SuppressWarnings("unused")
 		protected OuterGroupComparator()
 		{
 			super(OuterKey.class, true);
 		}
 		
+		@SuppressWarnings("rawtypes")
 		public int compare(WritableComparable w1, WritableComparable w2)
 		{
 			OuterKey ok1 = (OuterKey)w1;
@@ -223,6 +226,7 @@ public class OuterProduct
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	public static void runOuterProduct(int rowNumLeftMatrix, int colNumLeftMatrix, int rowNumRightMatrix, int colNumRightMatrix, String leftMatrixPath,
 			String rightMatrixPath, String outputDir, int numReduce) throws Exception
 	{

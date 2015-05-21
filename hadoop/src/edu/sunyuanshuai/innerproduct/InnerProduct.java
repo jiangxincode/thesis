@@ -126,10 +126,12 @@ public class InnerProduct {
 	}
 
 	private static class InnerGroupComparator extends WritableComparator {
+		@SuppressWarnings("unused")
 		protected InnerGroupComparator() {
 			super(InnerKey.class, true);
 		}
 
+		@SuppressWarnings("rawtypes")
 		public int compare(WritableComparable w1, WritableComparable w2) {
 			InnerKey ik1 = (InnerKey) w1;
 			InnerKey ik2 = (InnerKey) w2;

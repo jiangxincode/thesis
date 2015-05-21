@@ -14,7 +14,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class KMeansClusteringJob {
 
 	public static void main(String[] args) throws Exception {
-
 		int iteration = 1;
 		Configuration conf = new Configuration();
 		conf.set("num.iteration", iteration + "");
@@ -49,7 +48,7 @@ public class KMeansClusteringJob {
 				.findCounter(KMeansReducer.Counter.CONVERGED).getValue();
 		iteration++;
 		long time = 0;
-		while (counter > 0 && iteration < 10) {
+		while (counter > 0) { // && iteration < 10
 			conf = new Configuration();
 			conf.set("centroid.path", center.toString());
 			conf.set("num.iteration", iteration + "");
@@ -77,8 +76,13 @@ public class KMeansClusteringJob {
 			System.out.println("Job took " + (end - start) + "milliseconds");
 			time = time + (end - start);
 			iteration++;
-			counter = job.getCounters()
-					.findCounter(KMeansReducer.Counter.CONVERGED).getValue();
+			long temp = job.getCounters().findCounter(KMeansReducer.Counter.CONVERGED).getValue();
+			if(counter == temp) {
+				break;
+			}
+			else {
+				counter = temp;
+			}
 		}
 
 		System.out.println("Total time Taken :" + time);

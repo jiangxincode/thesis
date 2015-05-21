@@ -11,6 +11,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.WritableComparable;
 
 
+@SuppressWarnings("rawtypes")
 public class IndexPair implements WritableComparable 
 	{
 		public int x;

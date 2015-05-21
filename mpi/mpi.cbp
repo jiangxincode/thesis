@@ -13,7 +13,11 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="/usr/local/openmpi-1.8.4/include" />
 				</Compiler>
+				<Linker>
+					<Add directory="/usr/local/openmpi-1.8.4/lib" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/mpi" prefix_auto="1" extension_auto="1" />
@@ -31,7 +35,50 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="src/MyMPI.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/MyMPI.h" />
+		<Unit filename="src/data_gen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/data_print.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/eratosthenes_parallel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/floyd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/k-means.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/kmeans_ascii_gen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/mat_vec_mul_v1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/matrix1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/matrix2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/prime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/ranksort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sat1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sat2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sat3.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

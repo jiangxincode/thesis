@@ -24,9 +24,9 @@ public class KMeansReducer extends Reducer<Text, Text, Text, Text> {
 	@Override
 	protected void reduce(Text key, Iterable<Text> values, Context context)
 			throws IOException, InterruptedException {
-		int dimension = 2;
-
 		
+		int dimension = key.toString().split(",").length;
+
 		Double[] newCentroid_i = new Double[dimension];
 		for(int i=0;i<dimension;i++) {
 			newCentroid_i[i] = new Double(0.0);
@@ -38,9 +38,6 @@ public class KMeansReducer extends Reducer<Text, Text, Text, Text> {
 			}
 			count++;
 		}
-		System.out.println(count);
-		System.out.println();
-		System.out.println();
 		
 		for(int i=0;i<dimension;i++) {
 			newCentroid_i[i] = newCentroid_i[i] / count;
@@ -51,7 +48,6 @@ public class KMeansReducer extends Reducer<Text, Text, Text, Text> {
 		}
 		newCentroid += newCentroid_i[dimension-1].toString();
 		centers.add(newCentroid);
-		System.out.println(newCentroid);
 		if (!checkConvergence(key.toString(), newCentroid, dimension))
 			context.getCounter(Counter.CONVERGED).increment(1);
 	}

@@ -1,9 +1,5 @@
 package edu.sunyuanshuai.sharememoryinnerproduct;
-/*
- * <author>��Զ˧</author>
- * <date>2012/10/26</date>
- * <email>sunyuanshuai@Gmail.com</email>
- */
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -11,6 +7,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.WritableComparable;
 
 
+@SuppressWarnings("rawtypes")
 public class IndexPair implements WritableComparable 
 	{
 		public int x;
