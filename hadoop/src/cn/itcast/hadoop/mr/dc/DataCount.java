@@ -27,31 +27,26 @@ public class DataCount {
 		job.setMapperClass(DCMapper.class);
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(DataInfo.class);
-		
 		job.setReducerClass(DCReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(DataInfo.class);
-		
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
-		
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		job.setPartitionerClass(DCPartitioner.class);
 		
 		job.setNumReduceTasks(Integer.parseInt(args[2]));
 		
-		
 		job.waitForCompletion(true);
 
 	}
-	//Map
+
 	public static class DCMapper extends Mapper<LongWritable, Text, Text, DataInfo>{
 		
 		private Text k = new Text();
 		
 		@Override
-		protected void map(LongWritable key, Text value,
-				Mapper<LongWritable, Text, Text, DataInfo>.Context context)
+		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
 			String[] fields = line.split("\t");
@@ -65,11 +60,11 @@ public class DataCount {
 		}
 		
 	}
+	
 	public static class DCReducer extends Reducer<Text, DataInfo, Text, DataInfo>{
 		
 		@Override
-		protected void reduce(Text key, Iterable<DataInfo> values,
-				Reducer<Text, DataInfo, Text, DataInfo>.Context context)
+		protected void reduce(Text key, Iterable<DataInfo> values, Context context)
 				throws IOException, InterruptedException {
 			long up_sum = 0;
 			long down_sum = 0;
@@ -83,8 +78,10 @@ public class DataCount {
 		}
 		
 	}
+	//按照运营商进行partition
 	public static class DCPartitioner extends  Partitioner<Text, DataInfo>{
 		
+		//静态块从上往下执行
 		private static Map<String,Integer> provider = new HashMap<String,Integer>();
 		
 		static{
@@ -105,7 +102,5 @@ public class DataCount {
 			}
 			return count;
 		}
-		
 	}
-
 }

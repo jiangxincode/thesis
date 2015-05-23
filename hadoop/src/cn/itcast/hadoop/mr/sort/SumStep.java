@@ -17,30 +17,32 @@ public class SumStep {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf);
-		
+
 		job.setJarByClass(SumStep.class);
-		
+
 		job.setMapperClass(SumMapper.class);
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(InfoBean.class);
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
-		
+
 		job.setReducerClass(SumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(InfoBean.class);
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
-		
+
 		job.waitForCompletion(true);
 	}
 
-	public static class SumMapper extends Mapper<LongWritable, Text, Text, InfoBean>{
+	public static class SumMapper extends
+			Mapper<LongWritable, Text, Text, InfoBean> {
 
 		private InfoBean bean = new InfoBean();
 		private Text k = new Text();
+
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
-			// split 
+			// split
 			String line = value.toString();
 			String[] fields = line.split("\t");
 			// get useful field
@@ -52,23 +54,25 @@ public class SumStep {
 			context.write(k, bean);
 		}
 	}
-	
-	public static class SumReducer extends Reducer<Text, InfoBean, Text, InfoBean>{
+
+	public static class SumReducer extends
+			Reducer<Text, InfoBean, Text, InfoBean> {
 
 		private InfoBean bean = new InfoBean();
+
 		@Override
 		protected void reduce(Text key, Iterable<InfoBean> v2s, Context context)
 				throws IOException, InterruptedException {
-			
+
 			double in_sum = 0;
 			double out_sum = 0;
-			for(InfoBean bean : v2s){
+			for (InfoBean bean : v2s) {
 				in_sum += bean.getIncome();
 				out_sum += bean.getExpenses();
 			}
 			bean.set("", in_sum, out_sum);
 			context.write(key, bean);
 		}
-		
+
 	}
 }

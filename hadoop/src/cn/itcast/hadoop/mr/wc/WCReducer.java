@@ -11,16 +11,10 @@ public class WCReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
 	@Override
 	protected void reduce(Text key, Iterable<LongWritable> v2s, Context context)
 			throws IOException, InterruptedException {
-		//定义一行计数器
-		long sum = 0;
-		//迭代他的次数
-		for(LongWritable lw : v2s){
-			//求和
-			sum += lw.get();
+		long sum = 0; // 定义一行计数器
+		for (LongWritable lw : v2s) {
+			sum += lw.get(); // 求和
 		}
-		//输出
-		context.write(key, new LongWritable(sum));
+		context.write(key, new LongWritable(sum)); // 输出
 	}
-
-	
 }

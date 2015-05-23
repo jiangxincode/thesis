@@ -6,26 +6,27 @@ import java.io.IOException;
 
 import org.apache.hadoop.io.WritableComparable;
 
-public class InfoBean implements WritableComparable<InfoBean>{
+public class InfoBean implements WritableComparable<InfoBean> {
 
 	private String account;
 	private double income;
 	private double expenses;
 	private double surplus;
-	
-	public void set(String account,double income,double expenses){
+
+	public void set(String account, double income, double expenses) {
 		this.account = account;
 		this.income = income;
 		this.expenses = expenses;
 		this.surplus = income - expenses;
 	}
+
 	@Override
 	public void write(DataOutput out) throws IOException {
 		out.writeUTF(account);
 		out.writeDouble(income);
 		out.writeDouble(expenses);
 		out.writeDouble(surplus);
-		
+
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class InfoBean implements WritableComparable<InfoBean>{
 
 	@Override
 	public int compareTo(InfoBean o) {
-		if(this.income == o.getIncome()){
+		if (this.income == o.getIncome()) {
 			return this.expenses > o.getExpenses() ? 1 : -1;
 		}
 		return this.income > o.getIncome() ? 1 : -1;
@@ -46,8 +47,9 @@ public class InfoBean implements WritableComparable<InfoBean>{
 
 	@Override
 	public String toString() {
-		return  income + "\t" +	expenses + "\t" + surplus;
+		return income + "\t" + expenses + "\t" + surplus;
 	}
+
 	public String getAccount() {
 		return account;
 	}
