@@ -31,7 +31,6 @@ public class SortStep {
 		job.setOutputValueClass(InfoBean.class);
 
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
-
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 		job.waitForCompletion(true);
@@ -44,10 +43,7 @@ public class SortStep {
 		private InfoBean k = new InfoBean();
 
 		@Override
-		protected void map(
-				LongWritable key,
-				Text value,
-				Mapper<LongWritable, Text, InfoBean, NullWritable>.Context context)
+		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
 			String[] fields = line.split("\t");
@@ -66,8 +62,7 @@ public class SortStep {
 		private Text k = new Text();
 
 		@Override
-		protected void reduce(InfoBean key, Iterable<NullWritable> values,
-				Reducer<InfoBean, NullWritable, Text, InfoBean>.Context context)
+		protected void reduce(InfoBean key, Iterable<NullWritable> values, Context context)
 				throws IOException, InterruptedException {
 			k.set(key.getAccount());
 

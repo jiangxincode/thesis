@@ -42,10 +42,8 @@ public class SumStep {
 		@Override
 		protected void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
-			// split
 			String line = value.toString();
 			String[] fields = line.split("\t");
-			// get useful field
 			String account = fields[0];
 			double income = Double.parseDouble(fields[1]);
 			double expenses = Double.parseDouble(fields[2]);
