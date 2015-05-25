@@ -17,6 +17,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class KMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 	private final List<String> centers = new ArrayList<String>();
+	static int dimension = 0;
 
 	@Override
 	protected void setup(Context context) throws IOException,
@@ -24,6 +25,7 @@ public class KMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
 		super.setup(context);
 		Configuration conf = context.getConfiguration();
 		Path centroids = new Path(conf.get("centroid.path"));
+		dimension = Integer.parseInt(conf.get("num.dimension"));
 		FileSystem fs = FileSystem.get(conf);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -40,7 +42,6 @@ public class KMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
 			throws IOException, InterruptedException {
 		String nearest = null;
 		double nearestDistance = Double.MAX_VALUE;
-		int dimension = value.toString().split(",").length;
 		for (String c : centers) {
 			if(c != null) {
 				double dist = dist(c, value.toString(), dimension);

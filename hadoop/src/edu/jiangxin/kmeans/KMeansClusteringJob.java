@@ -24,6 +24,7 @@ public class KMeansClusteringJob {
 		conf.set("centroid.path", center.toString());
 		conf.set("num.iteration", iteration + "");
 		conf.set("num.dimension", args[2]);
+		conf.set("num.precision", args[3]);
 		
 		while (counter > 0) {
 			Job job = Job.getInstance(conf);
@@ -39,7 +40,7 @@ public class KMeansClusteringJob {
 			
 			job.setJarByClass(KMeansMapper.class);
 			
-			job.setNumReduceTasks(Integer.parseInt(args[3]));
+			job.setNumReduceTasks(Integer.parseInt(args[4]));
 			
 			FileInputFormat.addInputPath(job, in);
 			FileSystem fs = FileSystem.get(conf);

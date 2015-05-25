@@ -20,12 +20,21 @@ public class KMeansReducer extends Reducer<Text, Text, Text, Text> {
 	}
 
 	private final List<String> centers = new ArrayList<String>();
+	int dimension = 0;
+	static double precision = 0.0;
+	
+	@Override
+	protected void setup(Context context) throws IOException,
+			InterruptedException {
+		super.setup(context);
+		Configuration conf = context.getConfiguration();
+		dimension = Integer.parseInt(conf.get("num.dimension"));
+		precision = Double.parseDouble(conf.get("num.precision"));
+	}
 
 	@Override
 	protected void reduce(Text key, Iterable<Text> values, Context context)
 			throws IOException, InterruptedException {
-		
-		int dimension = key.toString().split(",").length;
 
 		Double[] newCentroid_i = new Double[dimension];
 		for(int i=0;i<dimension;i++) {
@@ -60,7 +69,7 @@ public class KMeansReducer extends Reducer<Text, Text, Text, Text> {
 			double center_i = Double.parseDouble(center.split(",")[i]);
 			sum += Math.pow((point_i - center_i), 2);
 		}
-		return Math.sqrt(sum) < 0.2;
+		return Math.sqrt(sum) < precision;
 	}
 
 	@Override
