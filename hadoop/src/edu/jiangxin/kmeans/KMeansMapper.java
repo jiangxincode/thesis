@@ -42,14 +42,16 @@ public class KMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
 		double nearestDistance = Double.MAX_VALUE;
 		int dimension = value.toString().split(",").length;
 		for (String c : centers) {
-			double dist = dist(c, value.toString(), dimension);
-			if (null == nearest) {
-				nearest = c;
-				nearestDistance = dist;
-			} else {
-				if (nearestDistance > dist) {
+			if(c != null) {
+				double dist = dist(c, value.toString(), dimension);
+				if (null == nearest) {
 					nearest = c;
 					nearestDistance = dist;
+				} else {
+					if (nearestDistance > dist) {
+						nearest = c;
+						nearestDistance = dist;
+					}
 				}
 			}
 		}

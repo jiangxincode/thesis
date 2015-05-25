@@ -10,81 +10,51 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-@SuppressWarnings("deprecation")
 public class KMeansClusteringJob {
 
 	public static void main(String[] args) throws Exception {
 		int iteration = 1;
-		Configuration conf = new Configuration();
-		conf.set("num.iteration", iteration + "");
-
-		Path in = new Path("hdfs://localhost:9000/kmeans/data/cluster.txt");
-		Path center = new Path(
-				"hdfs://localhost:9000/kmeans/center/centers.txt");
-		Path out = new Path("kmeans/depth_1");
-
-		conf.set("centroid.path", center.toString());
-
-		Job job = new Job(conf);
-		job.setJobName("KMeans Clustering");
-
-		job.setMapperClass(KMeansMapper.class);
-		job.setReducerClass(KMeansReducer.class);
-		job.setJarByClass(KMeansClusteringJob.class);
-
-		FileSystem fs = FileSystem.get(conf);
-		if (fs.exists(out)) {
-			fs.delete(out, true);
-		}
-		FileInputFormat.addInputPath(job, in);
-		FileOutputFormat.setOutputPath(job, out);
-
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
-
-		job.waitForCompletion(true);
-
-		long counter = job.getCounters()
-				.findCounter(KMeansReducer.Counter.CONVERGED).getValue();
-		iteration++;
+		long counter = 1;
 		long time = 0;
-		while (counter > 0) { // && iteration < 10
-			conf = new Configuration();
-			conf.set("centroid.path", center.toString());
-			conf.set("num.iteration", iteration + "");
-			job = new Job(conf);
+		Path in = new Path(args[0]);
+		Path center = new Path(args[1]);
+		Path out = new Path("kmeans/result");
+		
+		Configuration conf = new Configuration();
+		conf.set("centroid.path", center.toString());
+		conf.set("num.iteration", iteration + "");
+		conf.set("num.dimension", args[2]);
+		
+		while (counter > 0) {
+			Job job = Job.getInstance(conf);
 			job.setJobName("KMeans Clustering " + iteration);
-
+			
 			job.setMapperClass(KMeansMapper.class);
+			job.setMapOutputKeyClass(Text.class);
+			job.setMapOutputValueClass(Text.class);
+			
 			job.setReducerClass(KMeansReducer.class);
-			job.setJarByClass(KMeansMapper.class);
-
-			in = new Path("hdfs://localhost:9000/kmeans/data/cluster.txt");
-			out = new Path("kmeans/depth_" + iteration);
-
-			FileInputFormat.addInputPath(job, in);
-			if (fs.exists(out))
-				fs.delete(out, true);
-
-			FileOutputFormat.setOutputPath(job, out);
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(Text.class);
-
+			
+			job.setJarByClass(KMeansMapper.class);
+			
+			job.setNumReduceTasks(Integer.parseInt(args[3]));
+			
+			FileInputFormat.addInputPath(job, in);
+			FileSystem fs = FileSystem.get(conf);
+			if (fs.exists(out))
+				fs.delete(out, true);
+			FileOutputFormat.setOutputPath(job, out);
+			
 			long start = new Date().getTime();
-			job.waitForCompletion(true);
+			job.waitForCompletion(false);
 			long end = new Date().getTime();
-			System.out.println("Job took " + (end - start) + "milliseconds");
 			time = time + (end - start);
 			iteration++;
-			long temp = job.getCounters().findCounter(KMeansReducer.Counter.CONVERGED).getValue();
-			if(counter == temp) {
-				break;
-			}
-			else {
-				counter = temp;
-			}
+			counter = job.getCounters().findCounter(KMeansReducer.Counter.CONVERGED).getValue();
 		}
 
-		System.out.println("Total time Taken :" + time);
+		System.out.println("Total time Taken :" + time + "milliseconds");
 	}
 }
