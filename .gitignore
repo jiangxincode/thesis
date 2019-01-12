@@ -8,3 +8,15 @@
 *.out
 *.toc
 *.gz
+*.orig
+tags
+*.data
+*.doc
+*.doc#
+*.depend
+*.layout
+*.bmarks
+data/
+bin/
+obj/
+

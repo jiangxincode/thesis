@@ -1,0 +1,1 @@
+文件夹SparseMatrixProduct中的代码适用于稀疏矩阵，而NonSparseMatrix适用于非稀疏矩阵，二者算法逻辑思想一样，只是编程时进行了优化，将存储结构由二维数组变换为链表。

@@ -1,0 +1,5 @@
+cluster slots=4
+compute-0-0 slots=4
+compute-0-1 slots=4
+compute-0-2 slots=4
+compute-0-3 slots=4
